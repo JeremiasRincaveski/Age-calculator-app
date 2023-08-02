@@ -11,45 +11,60 @@ const meses = {
   10 : 31,
   11 : 30,
   12 : 31,
-}  
+};
 
-const inputs = document.querySelectorAll(`[data-input]`)
+const inputs = document.querySelectorAll(`[data-input]`);
 const dia = document.getElementById(`day`);
 const month = document.getElementById(`month`);
 const year = document.getElementById(`year`);
 
-inputs.forEach(input => input.addEventListener(`blur`, () => validaInput(input)))
+inputs.forEach(input => input.addEventListener(`blur`, () => validaInput(input)));
 
 function validaInput(input) {
-  const span = input.nextElementSibling;
-  console.log(span);
-  
   if(input.id === `day`) {
-    if(input.value > 31) {
-      input.parentElement.classList.add(`invalid`);
-      span.textContent = `dia invalido`
-    } else {
-      input.parentElement.classList.remove(`invalid`)
-    }
+    validaDia();
   }
-
+  
   if (input.id === `month`) {
-    if(input.value > 12) {
-      input.parentElement.classList.add(`invalid`);
-      span.textContent = `mes invalido`
+    validaMes();
+  }
+  
+  if(input.id === `year`) {
+    validaAno()
+  }
+}
+
+function validaDia(mes = 1) {
+  const span = dia.nextElementSibling;
+
+  if (dia.value > meses[mes] && month.value > 0) {
+    dia.parentElement.classList.add(`invalid`);
+    span.textContent = `mes com ${meses[mes]} dias`;
+  } else if(dia.value > meses[mes]) {
+    dia.parentElement.classList.add(`invalid`);
+    span.textContent = `informe um dia valido`;
+  } else {
+    dia.parentElement.classList.remove(`invalid`);
+  }
+}
+
+function validaMes() {
+  if (month.value > 0) {
+    if(month.value > 12) {
+      month.parentElement.classList.add(`invalid`);
+      span.textContent = `mes invalido`;
+      console.log(`mes invalido`);
     } else {
-      input.parentElement.classList.remove(`invalid`)
-      validaData(input.value, dia)
+      month.parentElement.classList.remove(`invalid`);
+      validaDia(month.value);
+      console.log(`mes valido`);
     }
   }
-  
-  if(input.id !== `year`) {
-    if (input.id === `day`) {
-      const isBissexto = verificaAnoBissexto(year.value)
-      const dia = document.getElementById(`day`);
-  
-    }
-  }
+}
+
+function validaAno() {
+  verificaAnoBissexto(year.value)
+  validaMes()
 }
 
 function verificaAnoBissexto(ano) {
@@ -68,20 +83,8 @@ function verificaAnoBissexto(ano) {
   }
 
   if (isBissexto) {
-    meses[2] = 29
+    meses[2] = 29;
   } else {
-    meses[2] = 28
-  }
-}
-
-function validaData(mes, input) {
-  console.log(mes, input);
-  const span = input.nextElementSibling;
-
-  if (input.value > meses[mes]) {
-    input.parentElement.classList.add(`invalid`);
-    span.textContent = `mes com ${meses[mes]} dias`
-  } else {
-    input.parentElement.classList.remove(`invalid`);
+    meses[2] = 28;
   }
 }

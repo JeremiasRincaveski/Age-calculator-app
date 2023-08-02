@@ -53,11 +53,9 @@ function validaMes() {
     if(month.value > 12) {
       month.parentElement.classList.add(`invalid`);
       span.textContent = `mes invalido`;
-      console.log(`mes invalido`);
     } else {
       month.parentElement.classList.remove(`invalid`);
       validaDia(month.value);
-      console.log(`mes valido`);
     }
   }
 }
@@ -70,8 +68,8 @@ function validaAno() {
 function verificaAnoBissexto(ano) {
   let isBissexto = true;
 
-  if(!ano % 4 === 0) {
-    return false;
+  if(ano % 4 !== 0) {
+    isBissexto = false;
   }
 
   if (ano % 4 === 0 && ano % 100 === 0) {

@@ -17,8 +17,12 @@ const inputs = document.querySelectorAll(`[data-input]`);
 const dia = document.getElementById(`day`);
 const month = document.getElementById(`month`);
 const year = document.getElementById(`year`);
+const button = document.querySelector(`button`);
 
-inputs.forEach(input => input.addEventListener(`blur`, () => validaInput(input)));
+button.addEventListener(`click`, () => {
+  inputs.forEach(input => validaInput(input));
+});
+
 
 function validaInput(input) {
   if(input.id === `day`) {
@@ -37,7 +41,7 @@ function validaInput(input) {
 function validaDia(mes = 1) {
   const span = dia.nextElementSibling;
 
-  if (dia.value > meses[mes] && month.value > 0) {
+  if (dia.value > meses[mes] && (month.value > 0 && month.value <= 12)) {
     dia.parentElement.classList.add(`invalid`);
     span.textContent = `mes com ${meses[mes]} dias`;
   } else if(dia.value > meses[mes]) {
@@ -49,10 +53,12 @@ function validaDia(mes = 1) {
 }
 
 function validaMes() {
+  const span = month.nextElementSibling;
+
   if (month.value > 0) {
     if(month.value > 12) {
       month.parentElement.classList.add(`invalid`);
-      span.textContent = `mes invalido`;
+      span.textContent = `informe um mes valido`;
     } else {
       month.parentElement.classList.remove(`invalid`);
       validaDia(month.value);

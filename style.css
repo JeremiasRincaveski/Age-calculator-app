@@ -100,7 +100,9 @@ main {
   max-width: 90vw;
   background-color: var(--white);
   padding: 3rem 1.7rem;
-  border-radius: 15px 15px 50%;
+  border-radius: 15px 15px 10rem;
+  transition: all 1s ease;
+  height: max-content;
 }
 
 .inputs {
@@ -218,6 +220,7 @@ main {
   font-size: 3rem;
   font-style: italic;
   font-weight: var(--font-weight-extra-bold);
+  transition: all 1s ease;
 }
 
 .tempo p span {
@@ -225,6 +228,10 @@ main {
 }
 
 @media (width >= 655px) {
+  main {
+    border-bottom-right-radius: 50%;
+  }
+
   .button button {
     right: 0;
   }
